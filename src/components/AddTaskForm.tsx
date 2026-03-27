@@ -1,16 +1,23 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
-import type { Task } from "../pages/Dashboard";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../services/firebaseConfig";
+
+type NewTaskForm = {
+  title: string;
+  description: string;
+};
 
 type NewTaskProps = {
   closeModal: () => void;
-  onAddTask: (newTask: Omit<Task, "id">) => void;
 };
 
-const AddTaskForm = ({ closeModal, onAddTask }: NewTaskProps) => {
-  const [task, setTask] = useState<Omit<Task, "id">>({
+const AddTaskForm = ({ closeModal }: NewTaskProps) => {
+  const [task, setTask] = useState<NewTaskForm>({
     title: "",
     description: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -23,10 +30,36 @@ const AddTaskForm = ({ closeModal, onAddTask }: NewTaskProps) => {
     }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onAddTask(task);
-    setTask({ title: "", description: "" });
+
+    if (!task.title.trim() || !task.description.trim()) {
+      setError("Please fill in both fields.");
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      setError("");
+
+      await addDoc(collection(db, "tasks"), {
+        title: task.title.trim(),
+        description: task.description.trim(),
+        createdAt: new Date(),
+      });
+
+      setTask({
+        title: "",
+        description: "",
+      });
+
+      closeModal();
+    } catch (err) {
+      console.error("Error adding task:", err);
+      setError("Failed to save task.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -58,9 +91,13 @@ const AddTaskForm = ({ closeModal, onAddTask }: NewTaskProps) => {
             />
           </div>
 
+          {error && <p>{error}</p>}
+
           <div className="btn-container">
-            <button type="submit">Add Task</button>
-            <button type="button" onClick={closeModal}>
+            <button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Saving..." : "Add Task"}
+            </button>
+            <button type="button" onClick={closeModal} disabled={isSubmitting}>
               Cancel
             </button>
           </div>
