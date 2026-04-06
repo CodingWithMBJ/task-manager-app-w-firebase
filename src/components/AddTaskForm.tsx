@@ -63,12 +63,12 @@ const AddTaskForm = ({ closeModal }: NewTaskProps) => {
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal">
+    <aside className="modal-overlay">
+      <section className="modal">
         <h2>Add Task</h2>
 
         <form onSubmit={handleSubmit} className="new-task">
-          <div>
+          <article>
             <label htmlFor="title">Title</label>
             <input
               id="title"
@@ -78,9 +78,9 @@ const AddTaskForm = ({ closeModal }: NewTaskProps) => {
               onChange={handleChange}
               placeholder="What do you want to call it?"
             />
-          </div>
+          </article>
 
-          <div>
+          <article>
             <label htmlFor="description">Description</label>
             <textarea
               id="description"
@@ -89,21 +89,21 @@ const AddTaskForm = ({ closeModal }: NewTaskProps) => {
               onChange={handleChange}
               placeholder="Write something about this task"
             />
-          </div>
+          </article>
 
           {error && <p>{error}</p>}
 
-          <div className="btn-container">
+          <article className="btn-container">
             <button type="submit" disabled={isSubmitting}>
               {isSubmitting ? "Saving..." : "Add Task"}
             </button>
             <button type="button" onClick={closeModal} disabled={isSubmitting}>
               Cancel
             </button>
-          </div>
+          </article>
         </form>
-      </div>
-    </div>
+      </section>
+    </aside>
   );
 };
 

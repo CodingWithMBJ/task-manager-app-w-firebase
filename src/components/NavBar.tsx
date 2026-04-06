@@ -1,6 +1,8 @@
 import { signOut, type User } from "firebase/auth";
 import { auth } from "../services/firebaseConfig";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBarsStaggered } from "@fortawesome/free-solid-svg-icons";
 
 type NavMenuProps = {
   user: User | null;
@@ -31,11 +33,7 @@ const NavBar = ({ user, showMenu, handleMenuToggle }: NavMenuProps) => {
   return (
     <nav className={`nav ${menuStatus}`}>
       <button className="menuBtn" onClick={handleMenuToggle}>
-        <img
-          src="/sidebar-svgrepo-com.svg"
-          alt="menu-btn"
-          className="menuBtn-icon"
-        />
+        <FontAwesomeIcon icon={faBarsStaggered} className="menuBtn-icon" />
       </button>
 
       {user && (

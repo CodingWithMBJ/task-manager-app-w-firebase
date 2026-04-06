@@ -3,12 +3,15 @@ import type { Task } from "../pages/Dashboard";
 
 type EditTaskProps = {
   closeModal: () => void;
-  onEditTask: (id: number, updates: Partial<Task>) => void;
+  onEditTask: (id: string, updates: Partial<Task>) => void;
   taskToEdit: Task;
 };
 
 const EditTask = ({ closeModal, onEditTask, taskToEdit }: EditTaskProps) => {
-  const [updates, setUpdates] = useState<Partial<Task>>({});
+  const [updates, setUpdates] = useState<Partial<Task>>({
+    title: taskToEdit.title,
+    description: taskToEdit.description,
+  });
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -28,43 +31,43 @@ const EditTask = ({ closeModal, onEditTask, taskToEdit }: EditTaskProps) => {
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal">
+    <aside className="modal-overlay">
+      <section className="modal">
         <h2>Edit Task</h2>
 
         <form onSubmit={handleSubmit} className="new-task">
-          <div>
+          <article>
             <label htmlFor="title">Title</label>
             <input
               id="title"
               name="title"
               type="text"
-              value={updates.title ?? taskToEdit.title}
+              value={updates.title ?? ""}
               onChange={handleChange}
               placeholder="What do you want to call it?"
             />
-          </div>
+          </article>
 
-          <div>
+          <article>
             <label htmlFor="description">Description</label>
             <textarea
               id="description"
               name="description"
-              value={updates.description ?? taskToEdit.description}
+              value={updates.description ?? ""}
               onChange={handleChange}
               placeholder="Write something about this task"
             />
-          </div>
+          </article>
 
-          <div className="btn-container">
+          <article className="btn-container">
             <button type="submit">Save Task</button>
             <button type="button" onClick={closeModal}>
               Cancel
             </button>
-          </div>
+          </article>
         </form>
-      </div>
-    </div>
+      </section>
+    </aside>
   );
 };
 

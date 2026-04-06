@@ -129,6 +129,9 @@ h2 {
 
 :where(.login-form, .register-form) input {
   text-align: center;
+  box-shadow: 0 0 5px var(--border);
+  border-radius: 5px;
+  padding: 4px 1em;
 }
 
 .dashboard {
@@ -155,35 +158,66 @@ h2 {
   flex: 3;
 }
 
-.task-ul {
+.task-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(auto, 300px));
-  grid-template-rows: auto;
+  grid-template-columns: repeat(auto-fit, clamp(200px, 80vw, 400px));
+  grid-template-rows: repeat(auto-fit, minmax(300px, auto));
   gap: 10px;
-  height: fit-content;
+  height: auto;
   padding: 0.2em 0.3em;
   border-radius: 10px;
+  margin: auto;
 }
 
-.task-ul li {
-  height: 100%;
+.task-card {
+  min-height: fit-content;
   width: 100%;
   background-color: var(--border);
-  padding: 0.2em 0.3em;
+  padding: 1px;
   border-radius: 10px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
 }
 
-.task-ul li:hover {
-  background-color: var(--code-bg);
+.task-card:hover {
+  background-color: var(--border);
 }
 
-.task-ul li h3 {
+.task-header {
+  border-bottom: 1px solid var(--code-bg);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.task-card h3 {
   color: var(--text-h);
   font-weight: 600;
+}
+
+.task-body {
+  flex: 4;
+  height: 100%;
+  min-height: fit-content;
+  width: 100%;
+  background-color: var(--bg);
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  word-break: break-all;
+}
+.btn-container {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  align-items: center;
+  padding: 0.5em 0;
 }
 
 .task-actions {
@@ -195,6 +229,9 @@ h2 {
 .del-btn,
 .edit-btn {
   cursor: pointer;
+  padding: 3px 15px;
+  background-color: var(--code-bg);
+  border-radius: 10px;
 }
 
 .del-btn:hover {
@@ -202,6 +239,25 @@ h2 {
 }
 .edit-btn:hover {
   color: var(--accent-border);
+}
+
+.add-btn {
+  background-color: var(--text);
+  color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin: auto;
+  padding: 5px 20px;
+  border-radius: 1em;
+  cursor: pointer;
+}
+button {
+  cursor: pointer;
+}
+.add-btn:hover {
+  background-color: var(--text-h);
 }
 
 .nav {
@@ -255,7 +311,7 @@ h2 {
   width: 100%;
 }
 
-.new-task div:where(:nth-child(1), :nth-child(2)) {
+.new-task article:where(:nth-child(1), :nth-child(2)) {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -263,7 +319,7 @@ h2 {
   width: 100%;
 }
 
-.new-task div:nth-child(2) {
+.new-task article:nth-child(2) {
   flex: 4;
   height: 100%;
   padding: 0.7em 0;
@@ -282,13 +338,6 @@ h2 {
   height: 100%;
 }
 
-.btn-container {
-  display: flex;
-  justify-content: space-evenly;
-  width: 100%;
-  align-items: center;
-}
-
 .user-menu {
   display: flex;
   justify-content: center;
@@ -298,8 +347,8 @@ h2 {
 
 .user-icon {
   background-color: var(--border);
-  width: 60px;
-  height: 60px;
+  width: 30px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
