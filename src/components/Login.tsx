@@ -1,4 +1,4 @@
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState, type FormEvent } from "react";
 import { auth } from "../services/firebaseConfig";
 
